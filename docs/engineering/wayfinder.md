@@ -37,7 +37,7 @@ Every ticket is **HITL** (human in the loop — grilling, prototype) or **AFK** 
 - Naming the **destination** is the first act — before any ticket exists — because it fixes the scope every ticket is measured against.
 - One map is one `wayfinder:map` issue; tickets are its child issues, referred to by **name**, never a bare `#42`.
 - A session resolves **at most one ticket** (research tickets excepted), records the answer as a resolution comment, closes the ticket, and appends a one-line pointer to *Decisions so far*.
-- If the opening grill surfaces **no fog**, it stops and tells you the journey is small enough to skip the map.
+- If the opening grill surfaces **no fog**, it stops and offers a structured route choice — skip the map, hand off to spec, jump straight to tickets — with a grounded recommendation first; it waits, since the routing is your call.
 
 ## Where it fits
 

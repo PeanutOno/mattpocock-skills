@@ -9,6 +9,14 @@ TDD is the red → green loop. This skill is the reference that makes that loop 
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
+## Asking the user
+
+1. In opencode, use the `question` tool when available; other harnesses use the equivalent structured-question tool. Fall back to numbered prose only when no structured tool is available, keeping the same options and recommendation.
+2. Offer 2–4 meaningful options and preserve a custom answer. Use the tool's custom input as the only catch-all, so every listed option is a substantive direction. Use single-select for mutually exclusive choices; use multi-select only when every option and the subsequent flow supports the full combination.
+3. When there is a basis, give one complete recommended answer in the question with a short reason, list its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. When only the user knows the fact, ask how to provide it, or note no preference.
+4. Batch only independent questions in one call; questions that depend on a prior answer wait and are recomputed once the answer lands.
+5. With no user interaction, pause on requirements/scope, irreversible changes, external side-effects, costs, permissions, or sensitive data. Only clearly AFK-capable flows may proceed on a local, reversible, non-requirements question using the recommended answer — and the assumption must be stated when chosen.
+
 ## What a good test is
 
 Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
@@ -19,9 +27,9 @@ See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking g
 
 A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them via a structured question — the seam approval is a hard gate and no test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
 
-Ask: "What's the public interface, and which seams should we test?"
+Ask as a structured question, with the proposed seam as the `(Recommended)` option and a short reason: "What's the public interface, and which seams should we test?"
 
 ## Anti-patterns
 

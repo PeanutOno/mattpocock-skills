@@ -14,7 +14,7 @@ npx skills update to-spec
 
 `to-spec` turns the current conversation and your codebase understanding into a spec (you may know this document as a PRD), then publishes it to your issue tracker.
 
-It does **not** interview you again. By the time you reach for it, the alignment work is done — `to-spec` synthesises what is already known rather than asking a fresh round of questions.
+It does **not** interview you again. By the time you reach for it, the alignment work is done — `to-spec` synthesises what is already known rather than asking a fresh round of questions. In opencode, its only prompt is a structured seam confirmation with 2–4 explained choices, an evidence-backed recommendation first when possible, and custom input; drafting and publishing wait while that hard gate is unanswered.
 
 ## When to reach for it
 

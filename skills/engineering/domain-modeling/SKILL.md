@@ -7,6 +7,27 @@ description: Build and sharpen a project's domain model. Use when the user wants
 
 Actively build and sharpen the project's domain model as you design. This is the *active* discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
+## Asking the user
+
+When this skill needs user input, **use opencode's `question` tool when available** — a structured picker (single- or multi-select) with the recommended option or option set marked `(Recommended)`. In other harnesses use the equivalent structured ask tool. Only when neither is available, fall back to **numbered plain text in chat** — keep the same options and recommendation so the answer is portable.
+
+Conventions:
+
+- **2–4 meaningful options**, with a free-text answer when the tool exposes one. Use that custom-input field as the only catch-all; every listed option must be a substantive direction.
+- **Single-select by default.** Only switch to multi-select when both the options _and_ the rest of this skill can handle every combination of picks — otherwise the result is ambiguous.
+- **Lead with the recommendation.** When there's evidence (a ref you already resolved, a file you already found), name the full recommended answer in the question text with a one-line reason, put its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For pure fact-lookups with no basis, recommend a fact-finding form or state no preference.
+- **Batch independent questions; serialise dependent ones.** Resolve one dependent decision at a time — a new definition locks downstream scope — wait and recompute its options before asking the next question.
+- **Pause when there's no human.** Decisions about requirements/scope, irreversible changes, external side effects, money, permissions, or sensitive data must wait. Other decisions are AFK-capable only when local, reversible, and not requirements; state the assumption before proceeding.
+
+### Skill-specific
+
+Surface every one of these as a structured question, in this order of severity:
+
+- **Term conflict** with an existing glossary entry.
+- **Fuzzy / overloaded term** that needs a precise canonical replacement.
+- **Scenario boundary** under stress-test — which side of the line the new concept sits on.
+- **Code contradiction** with what the user just stated.
+
 ## File structure
 
 Most repos have a single context:

@@ -35,6 +35,8 @@ Two artifacts, two different bars:
 
 The move that makes it click: when you state how something works, the skill cross-references the code and surfaces the contradiction — "your code cancels entire Orders, but you just said partial cancellation is possible — which is right?" The language and the code are forced to agree.
 
+In opencode, it resolves contradictions and disputed term boundaries one at a time through structured choices, leading with a recommendation when the code or prior context supports one and still accepting a custom answer. When the meaning affects requirements and nobody can answer, it pauses rather than silently choosing one.
+
 ## Pulled out on purpose
 
 `domain-modeling` is the **single source of truth** for building the project's ubiquitous language, split out as its own model-invoked skill so any other skill can reach it. [grill-with-docs](https://aihero.dev/skills-grill-with-docs) leans on it to record terms and decisions as a grilling session runs, [triage](https://aihero.dev/skills-triage) uses it to keep tickets in the project's own words, and [improve-codebase-architecture](https://aihero.dev/skills-improve-codebase-architecture) reaches for it while it works.

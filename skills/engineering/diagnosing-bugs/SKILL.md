@@ -9,6 +9,24 @@ A discipline for hard bugs. Skip phases only when explicitly justified.
 
 When exploring the codebase, read `CONTEXT.md` (if it exists) to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
 
+## Asking the user
+
+When this skill needs user input, **use opencode's `question` tool when available** — a structured picker (single- or multi-select) with the recommended option or option set marked `(Recommended)`. In other harnesses use the equivalent structured ask tool. Only when neither is available, fall back to **numbered plain text in chat** — keep the same options and recommendation so the answer is portable.
+
+Conventions:
+
+- **2–4 meaningful options**, with a free-text answer when the tool exposes one. Use that custom-input field as the only catch-all; every listed option must be a substantive direction.
+- **Single-select by default.** Only switch to multi-select when both the options _and_ the rest of this skill can handle every combination of picks — otherwise the result is ambiguous.
+- **Lead with the recommendation.** When there's evidence (a ref you already resolved, a file you already found), name the full recommended answer in the question text with a one-line reason, put its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For pure fact-lookups with no basis, recommend a fact-finding form or state no preference.
+- **Batch independent questions; serialise dependent ones.** If a downstream question depends on the previous answer, wait and recompute its options — don't ask a question whose options would be wrong half the time.
+- **Pause when there's no human.** Decisions about requirements/scope, irreversible changes, external side effects, money, permissions, or sensitive data must wait. Other decisions are AFK-capable only when local, reversible, and not requirements; state the assumption before proceeding.
+
+### Skill-specific
+
+- **Can't build a Phase 1 loop** — structured **multi-select** asking which of `Access to the repro environment`, `Captured artifact (HAR, log, dump, recording)`, `Permission to add temporary instrumentation` the user can supply. This is still a hard gate — Phase 2 doesn't start until at least one is provided.
+- **Hypothesis checkpoint (Phase 3)** — when interactive, use a structured question to confirm or re-rank the hypothesis list (the user often has domain knowledge that re-orders it instantly). When AFK, proceed with the current ranking and state that you did.
+- **"What would have prevented this bug?" (Phase 6)** — structured question to surface architectural findings before the hand-off to `/improve-codebase-architecture`.
+
 ## Phase 1 — Build a feedback loop
 
 **This is the skill.** Everything else is mechanical. If you have a **tight** pass/fail signal for the bug — one that goes red on _this_ bug — you will find the cause; bisection, hypothesis-testing, and instrumentation all just consume it. If you don't have one, no amount of staring at code will save you.

@@ -14,6 +14,14 @@ Scaffold the per-repo configuration that the engineering skills assume:
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
+## Asking the user
+
+1. In opencode, use the `question` tool when available; other harnesses use the equivalent structured-question tool. Fall back to numbered prose only when no structured tool is available, keeping the same options and recommendation.
+2. Offer 2–4 meaningful options and preserve a custom answer. Use the tool's custom input as the only catch-all — Jira, Linear, and other one-off trackers are captured there — so every listed option is a substantive direction. Use single-select for mutually exclusive choices; use multi-select only when every option and the subsequent flow supports the full combination.
+3. When there is a basis, give one complete recommended answer in the question with a short reason, list its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. When only the user knows the fact, ask how to provide it, or note no preference.
+4. Batch only independent questions in one call; questions that depend on a prior answer wait and are recomputed once the answer lands.
+5. With no user interaction, pause on requirements/scope, irreversible changes, external side-effects, costs, permissions, or sensitive data. Only clearly AFK-capable flows may proceed on a local, reversible, non-requirements question using the recommended answer — and the assumption must be stated when chosen.
+
 ## Process
 
 ### 1. Explore
@@ -31,7 +39,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 
 ### 2. Present findings and ask
 
-Summarise what's present and what's missing. Then take the sections in order — one section, one answer, then the next.
+Summarise what's present and what's missing. Then ask each section as a structured question, in order — Section A → Section B → Section C — one section, one answer, then the next. Each section's answer is a hard gate for the next step.
 
 Lead each section with the recommended answer so the user can accept it in a word. Give a one-line explainer only when the choice genuinely branches; skip the section entirely when exploration already settled it (Section B when `triage` isn't installed, Section C when there's no monorepo).
 
@@ -44,7 +52,8 @@ Default posture: these skills were designed for GitHub. If a `git remote` points
 - **GitHub** — issues live in the repo's GitHub Issues (uses the `gh` CLI)
 - **GitLab** — issues live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
 - **Local markdown** — issues live as files under `.scratch/<feature>/` in this repo (good for solo projects or repos without a remote)
-- **Other** (Jira, Linear, etc.) — ask the user to describe the workflow in one paragraph; the skill will record it as freeform prose
+
+Jira, Linear, and other one-off trackers come in via the structured question's custom input — describe the workflow in one paragraph and the skill records it as freeform prose.
 
 Record the choice in `docs/agents/issue-tracker.md`. The GitHub and GitLab templates carry a "PRs as a request surface" flag, defaulted **off** — leave it off and don't raise it; a user who wants external PRs in the triage queue can flip the flag in the file later.
 
@@ -61,6 +70,8 @@ The defaults are the five canonical roles, each label string equal to its name: 
 Offer **multi-context** — a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files — only when exploration found monorepo signals. Then confirm which layout they want.
 
 ### 3. Confirm and edit
+
+Ask as a structured question — this is a hard gate; no file is written until the user approves.
 
 Show the user a draft of:
 

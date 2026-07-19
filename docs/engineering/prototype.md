@@ -31,6 +31,8 @@ The question decides the shape, and there are two shapes:
 
 Picking the wrong branch wastes the whole prototype, so the question comes first. Both branches keep state in memory, run from one command, and surface the full state on every step.
 
+In opencode, if the LOGIC/UI branch is unclear, it asks through a structured choice with explained options and custom input, leading with a recommendation when the question provides enough evidence. If the underlying requirement is genuinely ambiguous and no one can answer, it stops rather than guessing.
+
 ## Keep the prototype as a primary source
 
 A finished prototype leaves two things. The **answer** — the verdict plus the question it settled — is what you capture durably (a commit message, an ADR, an issue). The **prototype itself is a primary source** — the runnable evidence the answer came from.

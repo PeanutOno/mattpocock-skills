@@ -10,6 +10,14 @@ Break a plan, spec, or conversation into a set of **tickets** — tracer-bullet 
 
 The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
 
+## Asking the user
+
+1. In opencode, use the `question` tool when available; other harnesses use the equivalent structured-question tool. Fall back to numbered prose only when no structured tool is available, keeping the same options and recommendation.
+2. Offer 2–4 meaningful options and preserve a custom answer. Use the tool's custom input as the only catch-all, so every listed option is a substantive direction. Use single-select for mutually exclusive choices; use multi-select only when every option and the subsequent flow supports the full combination.
+3. When there is a basis, give one complete recommended answer in the question with a short reason, list its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. When only the user knows the fact, ask how to provide it, or note no preference.
+4. Batch only independent questions in one call; questions that depend on a prior answer wait and are recomputed once the answer lands — the quiz below is intentionally serial for that reason.
+5. With no user interaction, pause on requirements/scope, irreversible changes, external side-effects, costs, permissions, or sensitive data. Only clearly AFK-capable flows may proceed on a local, reversible, non-requirements question using the recommended answer — and the assumption must be stated when chosen.
+
 ## Process
 
 ### 1. Gather context
@@ -41,19 +49,19 @@ Give each ticket its **blocking edges** — the other tickets that must complete
 
 ### 4. Quiz the user
 
+Sequence the quiz as a **dependent chain** — only one question is in flight at a time, and each answer reshapes the next. Do not ask shape, edges, and final approval in a single call; their answers depend on each other and a batched round-trip would lose the recompute loop.
+
 Present the proposed breakdown as a numbered list. For each ticket, show:
 
 - **Title**: short descriptive name
 - **Blocked by**: which other tickets (if any) must complete first
 - **What it delivers**: the end-to-end behaviour this ticket makes work
 
-Ask the user:
+Then:
 
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct — does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
-
-Iterate until the user approves the breakdown.
+1. **Ticket shape.** Ask as a structured question with `approve / too coarse / too fine`, with a custom input for a specific merge or split. Each change recomputes the ticket list and re-asks — don't move on while shape is in flux.
+2. **Blocking edges.** Once shape is stable, recompute blocking edges from the finalised tickets and ask as a structured question whether they look right, with a custom input for a specific edge to add, drop, or move. Recompute and re-ask on every change.
+3. **Final breakdown.** Once shape and edges are both stable, ask as a single structured question whether the whole breakdown is approved to publish. Hard gate — tickets are not published until this approval lands.
 
 ### 5. Publish the tickets to the configured tracker
 

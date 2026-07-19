@@ -12,7 +12,7 @@ npx skills update grill-with-docs
 
 ## What it does
 
-`grill-with-docs` interviews you relentlessly about a plan or design, one question at a time, until you and the agent reach a shared understanding — and it writes the vocabulary and decisions down as you go.
+`grill-with-docs` interviews you relentlessly about a plan or design, one question at a time, until you and the agent reach a shared understanding — and it writes the vocabulary and decisions down as you go. In opencode, each prompt is a structured question with 2–4 grounded options plus your own, asked in dependency order; reaching shared understanding is the hard gate that holds back any downstream work.
 
 The grilling **leaves a paper trail**. A plain interview sharpens your thinking and then evaporates when the session ends; this one captures each term the moment it's resolved into a `CONTEXT.md` glossary, and records the hard, one-way decisions as ADRs. The alignment survives the conversation instead of living only in your head.
 

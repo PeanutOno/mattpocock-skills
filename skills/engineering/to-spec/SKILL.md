@@ -8,13 +8,21 @@ This skill takes the current conversation context and codebase understanding and
 
 The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
 
+## Asking the user
+
+1. In opencode, use the `question` tool when available; other harnesses use the equivalent structured-question tool. Fall back to numbered prose only when no structured tool is available, keeping the same options and recommendation.
+2. Offer 2–4 meaningful options and preserve a custom answer. Use the tool's custom input as the only catch-all, so every listed option is a substantive direction. Use single-select for mutually exclusive choices; use multi-select only when every option and the subsequent flow supports the full combination.
+3. When there is a basis, give one complete recommended answer in the question with a short reason, list its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. When only the user knows the fact, ask how to provide it, or note no preference.
+4. Batch only independent questions in one call; questions that depend on a prior answer wait and are recomputed once the answer lands.
+5. With no user interaction, pause on requirements/scope, irreversible changes, external side-effects, costs, permissions, or sensitive data. Only clearly AFK-capable flows may proceed on a local, reversible, non-requirements question using the recommended answer — and the assumption must be stated when chosen.
+
 ## Process
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
 
 2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
 
-Check with the user that these seams match their expectations.
+Confirm the seams via a structured question — this is the one interactive seam in the skill; treat it as a hard gate and do not publish the spec until the user has approved the seams.
 
 3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
 

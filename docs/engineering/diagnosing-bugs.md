@@ -16,6 +16,8 @@ npx skills update diagnosing-bugs
 
 It refuses to hypothesise before you have a **tight feedback loop** — one runnable command that already goes red on *this* bug. Reading code to build a theory before that command exists is the exact failure this skill prevents. No red-capable loop, no diagnosis.
 
+In opencode, if no loop exists, it uses a structured prompt to request the missing access, artifact, or instrumentation through explained choices and custom input, then stops until one is available. Once the loop exists, a hypothesis checkpoint can continue non-interactively when nobody is present.
+
 ## When to reach for it
 
 Type `/diagnosing-bugs`, or the agent reaches for it automatically when a task fits — it fires on "diagnose" / "debug this", or when you report something broken, throwing, failing, or slow.

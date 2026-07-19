@@ -13,6 +13,23 @@ This command is _informed_ by the project's domain model and built on a shared d
 - Run the `/codebase-design` skill for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion — don't drift into "component," "service," "API," or "boundary."
 - The domain language in `CONTEXT.md` gives names to good seams; ADRs in `docs/adr/` record decisions this command should not re-litigate.
 
+## Asking the user
+
+When this skill needs user input, **use opencode's `question` tool when available** — a structured picker (single- or multi-select) with the recommended option or option set marked `(Recommended)`. In other harnesses use the equivalent structured ask tool. Only when neither is available, fall back to **numbered plain text in chat** — keep the same options and recommendation so the answer is portable.
+
+Conventions:
+
+- **2–4 meaningful options**, with a free-text answer when the tool exposes one. Use that custom-input field as the only catch-all; every listed option must be a substantive direction.
+- **Single-select by default.** Only switch to multi-select when both the options _and_ the rest of this skill can handle every combination of picks — otherwise the result is ambiguous.
+- **Lead with the recommendation.** When there's evidence (a ref you already resolved, a file you already found), name the full recommended answer in the question text with a one-line reason, put its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For pure fact-lookups with no basis, recommend a fact-finding form or state no preference.
+- **Batch independent questions; serialise dependent ones.** If a downstream question depends on the previous answer, wait and recompute its options — don't ask a question whose options would be wrong half the time.
+- **Pause when there's no human.** Decisions about requirements/scope, irreversible changes, external side effects, money, permissions, or sensitive data must wait. Other decisions are AFK-capable only when local, reversible, and not requirements; state the assumption before proceeding.
+
+### Skill-specific
+
+- **Candidate pick (after the HTML report)** — structured **single-select** of the candidate cards, with the `Top recommendation` first and marked `(Recommended)`. The next step can only grill one.
+- **ADR offer (step 3)** — structured yes/no, framed around whether the rejection reason would actually be needed by a future explorer to avoid re-suggesting the same thing.
+
 ## Process
 
 ### 1. Explore

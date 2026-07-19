@@ -7,6 +7,18 @@ argument-hint: "What would you like to learn about?"
 
 The user has asked you to teach them something. This is a stateful request - they intend to learn the topic over multiple sessions.
 
+## Asking the user
+
+This skill asks the learner real questions about what and why they're learning. Use the harness's structured-question tool — not free-form prose.
+
+1. **Tool choice.** In opencode, use the `question` tool when available. Other harnesses: use the equivalent structured-question tool. If neither is available, fall back to a numbered text list that preserves the same options and the recommendation in the same order.
+2. **Shape.** Offer 2–4 meaningful options per question. Use the tool's custom-answer path as the only catch-all, so every listed option is a substantive direction. Default to a single choice; only allow multi-select when both the options and the downstream flow genuinely support combinations.
+3. **Recommendation.** When the question has a basis, the question text carries a complete, ready-to-adopt recommended answer plus a short reason; its option or options are listed first and each marked `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For facts only the user knows, recommend an asking mode or state no preference rather than guess.
+4. **Batching.** Only batch questions that are independent. A dependent question waits for the prior answer and is recomputed from it.
+5. **AFK risk gate.** Without an interactive user, pause on anything that changes requirements/scope, is irreversible, has external side effects, costs money, needs elevated permissions, or touches sensitive data. Only flows explicitly marked AFK-capable may proceed with the recommended option on local, reversible, non-requirement questions, and must state the assumptions taken.
+
+Mission questions are hard gates. Mission clarification (when `MISSION.md` is missing or vague) and any proposed mission change both go through a structured question — they are scope/requirements decisions that must not be assumed.
+
 ## Teaching Workspace
 
 Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:

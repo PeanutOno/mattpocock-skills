@@ -43,6 +43,18 @@ Push too little down and the top bloats; push too much and you hide material the
 
 Where the ladder decides _how far down_ a piece sits, **co-location** decides _what sits beside it_ once there: keep a concept's definition, rules, and caveats under one heading rather than scattered, so reading one part brings its neighbours with it.
 
+## Asking the user
+
+A skill that fires user prompts is responsible for its own question contract. This skill doesn't ask, so there is no runtime `Asking the user` block below — but the principle still applies to every other skill you write. **Skills install standalone**, so any contract the agent follows at runtime must live in the skill's own `SKILL.md`, not in a shared doc the skill may not ship with.
+
+When you author a skill that needs human input, embed a self-contained `## Asking the user` section in its `SKILL.md` covering the full contract:
+
+1. **Tool choice.** In opencode, use the `question` tool when available. Other harnesses: use the equivalent structured-question tool. If neither is available, fall back to a numbered text list that preserves the same options and the recommendation in the same order.
+2. **Shape.** Use 2–4 meaningful options per question and the tool's custom-answer path as the only catch-all, so every listed option is a substantive direction. Single-select by default; multi-select only when both the options and the downstream flow genuinely support combinations.
+3. **Recommendation.** When the question has a basis, write the question text to carry a complete, ready-to-adopt recommended answer plus a short reason; list its option or options first and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For facts only the user knows, recommend an asking mode or state no preference rather than guess.
+4. **Batching.** Only batch independent questions. A dependent question waits for the prior answer and is recomputed from it.
+5. **AFK risk gate.** Without an interactive user, pause on anything that changes requirements/scope, is irreversible, has external side effects, costs money, needs elevated permissions, or touches sensitive data. Only flows explicitly marked AFK-capable may proceed with the recommended option on local, reversible, non-requirement questions, and must state the assumptions taken.
+
 ## When to split
 
 **Granularity** is how finely you divide skills, and each cut spends one of the two loads, so split only when the cut earns it. Two cuts:

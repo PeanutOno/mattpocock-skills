@@ -40,6 +40,10 @@ The rest of the reference is the toolkit for spending those loads well:
 - **Pruning** — single source of truth, relevance, and the no-op test applied sentence by sentence, against **sediment** and **sprawl**.
 - **Failure modes** — **premature completion**, **duplication**, **sediment**, **sprawl**, **no-op** — to diagnose a skill that isn't behaving.
 
+## Asking the user
+
+When a skill's flow needs human input — a clarification, a confirmation, or a route choice — it owns its own structured-question contract directly. Use opencode's built-in `question` primitive with a few grounded options plus a custom answer and a clear hard gate the skill closes on, so the skill behaves predictably when installed standalone, the way it does alongside the rest of the set.
+
 ## Where it fits
 
 This is a reach-for-it-anytime standalone reference — the meta-skill you consult while building the rest of the set, not a step in a chain. Its natural neighbour is any router you maintain, because a router is the direct cure for the cognitive load that user-invoked skills pile up; when you're unsure which skill or flow fits a task, [ask-matt](https://aihero.dev/skills-ask-matt) routes you over the whole set.

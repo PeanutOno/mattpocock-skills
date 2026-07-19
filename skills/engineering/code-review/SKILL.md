@@ -12,6 +12,23 @@ Both axes run as **parallel sub-agents** so they don't pollute each other's cont
 
 The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
 
+## Asking the user
+
+When this skill needs user input, **use opencode's `question` tool when available** — a structured picker (single- or multi-select) with the recommended option or option set marked `(Recommended)`. In other harnesses use the equivalent structured ask tool. Only when neither is available, fall back to **numbered plain text in chat** — keep the same options and recommendation so the answer is portable.
+
+Conventions:
+
+- **2–4 meaningful options**, with a free-text answer when the tool exposes one. Use that custom-input field as the only catch-all; every listed option must be a substantive direction.
+- **Single-select by default.** Only switch to multi-select when both the options _and_ the rest of this skill can handle every combination of picks — otherwise the result is ambiguous.
+- **Lead with the recommendation.** When there's evidence (a ref you already resolved, a file you already found), name the full recommended answer in the question text with a one-line reason, put its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For pure fact-lookups with no basis, recommend a fact-finding form or state no preference.
+- **Batch independent questions; serialise dependent ones.** If a downstream question depends on the previous answer, wait and recompute its options — don't ask a question whose options would be wrong half the time.
+- **Pause when there's no human.** Decisions about requirements/scope, irreversible changes, external side effects, money, permissions, or sensitive data must wait. Other decisions are AFK-capable only when local, reversible, and not requirements; state the assumption before proceeding.
+
+### Skill-specific
+
+- **Missing fixed point (step 1)** — structured single-select whose options are the plausible refs you've already discovered (recent branches, tags, `main`, `HEAD~N`, merge-bases from `git log --oneline`), plus a custom-input for the user to type one. If you found no candidates, the only option is "type the ref".
+- **Missing spec (step 2)** — structured single-select: `Provide a path or URL`, `No spec — skip the Spec axis`. When no human is available, **pause** — review scope is not yours to set silently.
+
 ## Process
 
 ### 1. Pin the fixed point

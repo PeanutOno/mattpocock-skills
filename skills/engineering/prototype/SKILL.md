@@ -7,6 +7,22 @@ description: Build a throwaway prototype to answer a design question. Use when t
 
 A prototype is **throwaway code that answers a question**. The question decides the shape.
 
+## Asking the user
+
+When this skill needs user input, **use opencode's `question` tool when available** — a structured picker (single- or multi-select) with the recommended option or option set marked `(Recommended)`. In other harnesses use the equivalent structured ask tool. Only when neither is available, fall back to **numbered plain text in chat** — keep the same options and recommendation so the answer is portable.
+
+Conventions:
+
+- **2–4 meaningful options**, with a free-text answer when the tool exposes one. Use that custom-input field as the only catch-all; every listed option must be a substantive direction.
+- **Single-select by default.** Only switch to multi-select when both the options _and_ the rest of this skill can handle every combination of picks — otherwise the result is ambiguous.
+- **Lead with the recommendation.** When there's evidence (a ref you already resolved, a file you already found), name the full recommended answer in the question text with a one-line reason, put its option or options first, and mark each `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For pure fact-lookups with no basis, recommend a fact-finding form or state no preference.
+- **Batch independent questions; serialise dependent ones.** If a downstream question depends on the previous answer, wait and recompute its options — don't ask a question whose options would be wrong half the time.
+- **Pause when there's no human.** Decisions about requirements/scope, irreversible changes, external side effects, money, permissions, or sensitive data must wait. Other decisions are AFK-capable only when local, reversible, and not requirements; state the assumption before proceeding.
+
+### Skill-specific
+
+- **LOGIC vs UI ambiguity** — structured single-select of the two branches. If the user can't be reached **and** the question is genuinely ambiguous, **pause** and explain which branch you'd take and why — the choice defines requirements/scope, which is not AFK-capable. Do not auto-build a branch on the user's behalf.
+
 ## Pick a branch
 
 Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
@@ -14,7 +30,7 @@ Identify which question is being answered — from the user's prompt, the surrou
 - **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a tiny interactive terminal app that pushes the state machine through cases that are hard to reason about on paper.
 - **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
 
-The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
+The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, stop before building. State which branch you would recommend and why, then wait; choosing the prototype's question defines requirements and is not AFK-capable.
 
 ## Rules that apply to both
 

@@ -8,6 +8,18 @@ A loose idea has arrived — too big for one agent session, and wrapped in fog: 
 
 The destination varies per effort, and naming it is the first act of charting — it shapes every ticket. It might be a spec to hand off and iterate on, a decision to lock before planning starts, or a change made in place like a data-structure migration. The map is domain-agnostic — engineering work, course content, whatever fits the shape.
 
+## Asking the user
+
+Wayfinder's decisions are human-in-the-loop. Use the harness's structured-question tool — not free-form prose — and never stand in for the human's side.
+
+1. **Tool choice.** In opencode, use the `question` tool when available. Other harnesses: use the equivalent structured-question tool. If neither is available, fall back to a numbered text list that preserves the same options and the recommendation in the same order.
+2. **Shape.** Offer 2–4 meaningful options per question. Use the tool's custom-answer path as the only catch-all, so every listed option is a substantive direction. Default to a single choice; only allow multi-select when both the options and the downstream flow genuinely support combinations.
+3. **Recommendation.** When the question has a basis, the question text carries a complete, ready-to-adopt recommended answer plus a short reason; its option or options are listed first and each marked `(Recommended)`. Evidence must come from user statements, the repository, or tool output; generic conventions and model priors do not count. For facts only the user knows, recommend an asking mode or state no preference rather than guess.
+4. **Batching.** Only batch questions that are independent. A dependent question waits for the prior answer and is recomputed from it.
+5. **AFK risk gate.** Without an interactive user, pause on anything that changes requirements/scope, is irreversible, has external side effects, costs money, needs elevated permissions, or touches sensitive data. Only flows explicitly marked AFK-capable may proceed with the recommended option on local, reversible, non-requirement questions, and must state the assumptions taken.
+
+HITL is non-negotiable: every Grilling, Prototype, and HITL Task ticket resolves through a live exchange, never the agent answering for itself. When charting finds no fog — the way to the destination is already clear in one session — surface 2–4 structured single-select route options drawn from this context, recommend one, then pause and wait for the human.
+
 ## Plan, don't do
 
 Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear — nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. An effort can override this in its **Notes** — carrying execution into the map itself — but absent that, produce decisions, not deliverables.

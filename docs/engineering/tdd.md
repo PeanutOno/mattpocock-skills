@@ -22,6 +22,8 @@ Type `/tdd`, or the agent reaches for it automatically when a task fits — buil
 
 Reach for it when there's a concrete behaviour to build and you want tests that survive a refactor. If the behaviour isn't pinned down yet, settle the spec first — for that, use [to-spec](https://aihero.dev/skills-to-spec). When the work is really about the shape of the interface rather than the tests, use [codebase-design](https://aihero.dev/skills-codebase-design); `tdd` calls into it for the deep-module vocabulary during planning.
 
+In opencode, before the red-green work begins, it asks you to confirm the testing seam through a structured choice with 2–4 explained options, an evidence-backed recommendation first, and custom input. This confirmation is a hard gate: if nobody is available, it stops rather than choosing a seam itself.
+
 ## Red-green, one slice at a time
 
 The leading idea is the **red-green loop**: write one failing test (red), add just enough code to pass it (green), then repeat for the next behaviour — each cycle informed by what the last one taught you. The very first cycle is a **tracer bullet**: one test that proves a single path works end-to-end, before you build outward from it. Because you just wrote the code, you know exactly which behaviour matters and how to verify it — you never outrun your headlights by committing to test structure you don't yet understand.
