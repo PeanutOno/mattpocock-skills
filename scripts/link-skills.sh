@@ -6,14 +6,14 @@ set -euo pipefail
 # modifications — will not be approved.
 #
 # Links all skills in the repository into the local skill directories used by
-# each agent harness:
-#   - ~/.claude/skills  — Claude Code
-#   - ~/.agents/skills  — Codex and other Agent Skills-compatible harnesses
+# opencode:
+#   - ~/.config/opencode/skills  — opencode global
+#   - ~/.agents/skills           — Agent Skills standard (also discovered by opencode)
 # Each entry is a symlink into this repo, so a `git pull` is all that's needed
 # to keep installed skills up to date.
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-DESTS=("$HOME/.claude/skills" "$HOME/.agents/skills")
+DESTS=("$HOME/.config/opencode/skills" "$HOME/.agents/skills")
 
 # Collect the repo's skills once, link into every destination.
 names=()
