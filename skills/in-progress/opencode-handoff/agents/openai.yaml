@@ -1,0 +1,5 @@
+interface:
+  display_name: "OpenCode Handoff"
+  short_description: "Hand off to a fresh opencode session"
+policy:
+  allow_implicit_invocation: false
